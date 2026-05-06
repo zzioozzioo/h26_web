@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>영화 후기 작성</title>
+    </head>
+
+    <body>
+
+        <h1> 영화 후기 작성하기</h1>
+
+        <form action="#" method="post">
+
+            <div>
+                <label for="movie-select">영화 선택: </label>
+                <select id="movie-select" name="movie">
+                    <option value="harrypotter3">해리포터와 아즈카반의 죄수</option>
+                    <option value="harrypotter6">해리포터와 혼혈왕자</option>
+                </select>
+            </div>
+
+            <br>
+
+            <div>
+                <label for="username">작성자: </label>
+                <input type="radio" id="star5" name="rating" value="5"> <label for="star5">5점</label>
+                <input type="radio" id="star4" name="rating" value="4"> <label for="star5">4점</label>
+                <input type="radio" id="star3" name="rating" value="3"> <label for="star5">3점</label>
+                <input type="radio" id="star2" name="rating" value="2"> <label for="star5">2점</label>
+                <input type="radio" id="star1" name="rating" value="1"> <label for="star5">1점</label>
+            </div>
+
+            <br>
+
+            <div>
+                <label for="review-text">상세 후기: </label><br>
+                <textarea id="review-text" name="review" rows="5" cols="40" placeholder="영화에 대한 솔직한 평을 남겨주세요."></textarea>
+            </div>
+
+            <br>
+
+            <div>
+                <button type="submit">후기 등록하기</button>
+                <button type="reset">다시 쓰기</button>
+            </div>
+
+        </form>
+
+        <hr>
+
+        <p>
+            <a href="../index.html">메인으로 돌아가기</a>
+        </p>
+    </body>
+</html>
