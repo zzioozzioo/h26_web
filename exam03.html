@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.onload = function() {
+            let pTag = document.getElementById("ide")
+            pTag.innerHTML = 'pTag 내용을 읽었음'
+        }
+        function changeText() {
+            let pTag = document.getElementById("ide")
+            pTag.innerHTML = '<em>수정된 내용</em>'
+            // pTag.innerText = '<em>수정된 내용</em>'랑 차이점 알기
+        }
+    </script>
+</head>
+<body>
+    <hr>
+    <p id = "ide"><strong>나는 홍길동입니다</strong></stronf></p>
+    <button onclick="changeText()">수정</button>
+    </button>
+    <p>너는 홍길순입니다</p>
+    <hr>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let checkForm = function() {
+            // let inputName = document.getElementsByName('name')[0]
+            // let inputAge = document.getElementsByName('age')[0]
+
+            let inputName = document.inputForm.name
+            let inputAge = document.inputForm.age
+
+            if(inputName.value == '') {
+                alert('이름은 필수항목입니다.')
+                inputName.focus()
+                return false
+            }
+
+            if(inputAge.value == '') {
+                alert('나이는 필수항목입니다.')
+                inputAge.focus()
+                return false
+            }
+            return true         
+        }
+    </script>
+</head>
+<body>
+    <h2>자기소개</h2>
+    <form action="./exam02.html" method="get" onsubmit="return checkForm()" name="inputForm"> <!-- method 기본이 get 방식 -->
+        <div>이름: <input type="text" name="name"></div> <!-- required: submit 버튼 누를 때 에러 발생 -->
+        <div>나이: <input type="text" name="age"></div>
+        <div>
+            취미 : <input type="checkbox" name="hobby" value="soccer">축구
+            <input type="checkbox" name="hobby" value="basketball">농구
+            <input type="checkbox" name="hobby" value="game">게임
+        </div>
+        <button type="submit">전송</button>
+    </form>
+</body>
+</html>

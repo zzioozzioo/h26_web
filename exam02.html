@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 단을 입력받아 구구단을 브라우저 출력
+        let dan = parseInt(prompt('몇 단?'))
+
+        document.write(`<h2>*** ${dan}단 ***</h2>`)
+        let i = 1
+        while(i <= 9){
+            document.write(`${dan} x ${i} = ${dan * i}<br>`)
+            i++
+        }
+        document.write('<hr>')
+        
+        for(let j = 1; j <= 9; j++){
+            document.write(`${dan} x ${j} = ${dan * j}<br>`)
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
