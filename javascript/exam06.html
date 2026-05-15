@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="myObject.js"></script>
+    <script>
+        document.write(`name : ${person.name}<br>`)
+        document.write(`phone : ${person.phone}<br>`)
+        document.write(`address : ${person.address}   ${'address' in person}<br>`)
+
+        for(let key in person) { // in 키워드: 값이 할당되지 않은 공간은 무시 -> undefined 출력 X
+            if(typeof person[key] !== 'function')
+                document.write(`${key} : ${person[key]}<br>`)
+        }
+
+        let p01 = newPerson('고길동', '5555')
+        let p02 = newPerson('한길동', '8888')
+
+        let p03 = new Person('윤길동', '3333')
+        let p04 = new Person('박길동', '1111')
+        let p05 = {...p04}
+
+        p03.info = () => {
+            alert('call')
+        }
+
+        const pArr = [p03, p04]
+        for(let i in pArr) {
+            pArr[i]?.info?.() // error 유발시키지 않고 실행
+        }
+
+        document.write('<hr>')
+        let person1 = new Person2('홍길순', '3333-4444')
+        let person2 = new Person2('윤길순', '6666-7777')
+
+        person1.call()
+
+        let t = new Teacher('고선생', '11112222', '수학')
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

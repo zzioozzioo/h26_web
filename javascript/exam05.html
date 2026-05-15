@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        class Person {
+            #name
+            constructor(name, age) {
+                this.name = name
+                this.age = age
+            }
+            info() {
+                document.write(`name : ${this.name}  age : ${this.age}<br>`)
+            }
+        }
+
+        let p1 = new Person('홍길동', 25)
+        let p2 = new Person('고길동', 30)
+        let p3 = new Person()
+
+        p1.info()
+        p2.info()
+        p3.info()
+
+        // document.write(`이름은 ${p1.#name}입니다.<br>`) // # 붙이면 private -> 에러 발생
+        document.write(`이름은 ${p1.#age}입니다.<br>`)
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
