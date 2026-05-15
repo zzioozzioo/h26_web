@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계산기</title>
+    <!-- TODO: 진수 변환 후 계산할 때는 해당 진법으로 계산되어야 함 -->
+    <script>
+        window.onload = function() {
+            const display = document.getElementById('display')
+            const programmerSection = document.getElementById('programmer')
+            const operators = ['+', '-', '*', '/']
+
+            window.append = function(value) {
+
+                const currentDisplay = display.value;
+                const lastChar = display.value.slice(-1)
+
+                const isValueOperator = operators.includes(value.toString())
+                const isLastCharOperator = operators.includes(lastChar)
+
+
+                if (isValueOperator && isLastCharOperator) {
+                    return;
+                }
+
+                if (display.value === '0') {
+                    if (isValueOperator || value === '.') {
+                        display.value += value;
+                    } else {
+                        display.value = value
+                    }
+                } else {
+                    display.value += value
+                }
+            };
+
+            window.clearDisplay = function() {
+                display.value = '0'
+            }
+
+            window.backspace = function() {
+                display.value = display.value.slice(0, -1)
+
+                if (display.value === '') {
+                    display.value = '0'
+                }
+            }
+
+            // 결과 계산
+            window.calculate = function() {
+                try {
+                    let currentDisplay = display.value
+
+                    if(operators.includes(currentDisplay.slice(-1))) {
+                            currentDisplay = currentDisplay.slice(0, -1)
+                    }
+
+                    if(currentDisplay) {
+                        const result = eval(display.value)
+                        display.value = (result === undefined || result === null) ? '0' : result
+                    }
+                } catch (error) {
+                    alert('잘못된 수식입니다.')
+                    clearDisplay()
+                }
+            }
+
+            window.toggleProgrammerMode = function() {
+                if (programmerSection.style.display === 'none') {
+                    programmerSection.style.display = 'block'
+                } else {
+                    programmerSection.style.display = 'none'
+                }
+            }    
+
+            window.convertToBase = function(base) {
+                const currentValue = parseFloat(display.value)
+
+                if(isNaN(currentValue)) {
+                    alert("변환할 숫자를 먼저 입력하세요.")
+                    return
+                }
+
+                const integerValue = Math.floor(currentValue);
+                
+                if (base === 2) {
+                    display.value = integerValue.toString(2);
+                } else if (base === 8) {
+                    display.value = integerValue.toString(8);
+                } else if (base === 16) {
+                    display.value = integerValue.toString(16).toUpperCase();
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 전체 배경 및 폰트 설정 */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f3f3f3;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* 계산기 컨테이너 */
+        .calculator {
+            background-color: #eeeeee;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 320px;
+        }
+
+        /* 입력창 디자인 */
+        #display {
+            width: 100%;
+            height: 80px;
+            border: none;
+            background: transparent;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        /* 버튼 그룹 레이아웃 */
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px; /* 윈도우 계산기 특유의 촘촘한 간격 */
+        }
+
+        /* 공통 버튼 디자인 */
+        button {
+            border: 1px solid #dcdcdc;
+            height: 50px;
+            font-size: 1.1rem;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #e5e5e5;
+        }
+
+        /* 연산자 버튼 강조 */
+        .operator {
+            background-color: #f3f3f3;
+            font-weight: bold;
+        }
+
+        /* '=' 버튼 파란색 강조 (스크린샷 참고) */
+        .equals {
+            background-color: #0067c0;
+            color: white;
+            border: none;
+        }
+
+        .equals:hover {
+            background-color: #005dae;
+        }
+
+        /* 프로그래머 모드 버튼 구역 */
+        #programmer {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+        }
+
+        #programmer button {
+            height: 40px;
+            font-size: 0.9rem;
+            background-color: #ffffff;
+        }
+
+        /* 프로그래머 토글 버튼 */
+        .toggle-btn {
+            width: 100%;
+            margin-top: 15px;
+            background-color: transparent;
+            border: none;
+            color: #555;
+            font-size: 0.9rem;
+            text-align: left;
+            padding-left: 5px;
+        }
+
+        .toggle-btn:hover {
+            background-color: #e2e2e2;
+            text-decoration: underline;
+        }
+</style>
+</head>
+<body>
+    <div class="calcualator">
+        <input type="text" id="display" value="0" readonly>
+        <div class="button-grid">
+            <button onclick="clearDisplay()" class="operator">C</button>
+            <button onclick="backspace()" class="operator">⌫</button>
+            <button class="operator" style="grid-column: span 2; cursor: default;"></button>
+
+            <button onclick="append(1)">1</button>
+            <button onclick="append(2)">2</button>
+            <button onclick="append(3)">3</button>
+            <button onclick="append('+')" class="operator">+</button>   
+
+            <button onclick="append(4)">4</button>
+            <button onclick="append(5)">5</button>
+            <button onclick="append(6)">6</button>
+            <button onclick="append('-')" class="operator">-</button>
+
+            <button onclick="append(7)">7</button>
+            <button onclick="append(8)">8</button>
+            <button onclick="append(9)">9</button>
+            <button onclick="append('*')" class="operator">x</button>
+
+            <button onclick="append(0)">0</button>
+            <button onclick="append('.')">.</button>
+            <button onclick="calculate()" class="equals">=</button>
+            <button onclick="append('/')" class="operator">/</button>
+        </div>
+
+        <button onclick="toggleProgrammerMode()" class="toggle-btn">☰ 프로그래머</button>
+        <div id="programmer" style="display: none;">
+            <button onclick="convertToBase(2)">2진수</button>
+            <button onclick="convertToBase(8)">8진수</button>
+            <button onclick="convertToBase(16)">16진수</button>
+        </div>
+    </div>
+    
+</body>
+</html>
