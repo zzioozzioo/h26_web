@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        let prnNums = function(x, y, ...numbers) {   
+            console.log(`x: ${x}, y: ${y}`)
+            console.log(`numbers: ${numbers}`)
+        }
+
+        let nums = [3, 4, 2, 6, 1 ,7, 87]
+        prnNums(...nums, ...nums)
+
+        //deep copy
+        // let copys = new Array()
+        // for(let i in nums) {
+        //     copys[i] = nums[i]
+        // }
+
+        // let copys = nums.map(function(element) {
+        //     console.log(arguments)
+        //     return element
+        // })
+
+        let copys = [...nums] // 전개연산자(unpacking): nums[0], nums[1]를 표현
+
+        document.write(`nums : ${nums}<br`)
+        document.write(`copys : ${copys}<br`)
+        nums[2] = 1000
+        document.write(`nums : ${nums}<br`)
+        document.write(`nums : ${nums}<br`)
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
