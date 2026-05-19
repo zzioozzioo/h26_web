@@ -1,4 +1,4 @@
-.complete {
+.complete .todo-title {
     text-decoration: line-through;
     color: gray
 }
