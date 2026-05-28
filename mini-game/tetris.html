@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TETRIS</title>
+    <link rel="stylesheet" href="tetrisStyle.css">
+    
+</head>
+<body>
+    <div id="start-screen" class="start-screen show">
+        <div class="start-box">
+            <h2>TETRIS</h2>
+            <h3>GAME OPTIONS</h3>
+            
+            <div class="option-group">
+                <label for="select-difficulty">난이도 선택</label>
+                <select id="select-difficulty" class="select-option">
+                    <option value="하">하 (쉬움)</option>
+                    <option value="중" selected>중 (보통)</option>
+                    <option value="상">상 (어려움)</option>
+                </select>
+            </div>
+            
+            <div class="option-group">
+                <label for="select-obstacle">장애물 모드</label>
+                <select id="select-obstacle" class="select-option">
+                    <option value="일반" selected>일반 (장애물 없음)</option>
+                    <option value="장애물">장애물 모드 (장애물 있음)</option>
+                </select>
+            </div>
+            
+            <button id="btn-start-continue" onclick="loadGame(); this.blur();" style="background-color: #ff9800; margin-top: 10px;">기존 게임 이어서 하기</button>
+            <button id="btn-start-game" onclick="pressStartGame(event)" style="background-color: #4CAF50; margin-top: 5px; padding: 14px; font-size: 16px;">GAME START</button>
+        </div>
+    </div>
+
+    <h1>테트리스 (Tetris)</h1>
+    <div class="controls-guide">
+        ← → : 이동 | ↑ : 회전 | ↓ : 소프트 드롭 | Space : 하드 드롭 | P : 일시정지 및 저장
+    </div>
+
+    <div class="game-container">
+        <div>
+            <div class="info-panel">
+                    <h3>게임 정보</h3>
+                    <div class="status-container">
+                        <div class="status-row">
+                            <span class="status-label">난이도</span>
+                            <div class="status-options">
+                                <span class="status-item" data-diff="하">하</span>
+                                <span class="status-item" data-diff="중">중</span>
+                                <span class="status-item" data-diff="상">상</span>
+                            </div>
+                        </div>
+                        <div class="status-row">
+                            <span class="status-label">모드</span>
+                            <div class="status-options">
+                                <span class="status-item" data-obs="일반">일반</span>
+                                <span class="status-item" data-obs="장애물">장애물</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="board-wrapper">
+                <canvas id="tetrisCanvas" width="240" height="480"></canvas>
+                
+                <div id="levelup-alert" class="levelup-overlay">
+                    LEVEL UP!<br>
+                    <span style="font-size: 16px; color: #fff;">Lv.<span id="pop-level">2</span> 진입</span>
+                </div>
+
+                <div id="gameover-screen" class="gameover-overlay">
+                    <div class="gameover-title">GAME OVER</div>
+                    <div style="margin-bottom: 20px; color:#aaa;">최종 점수: <span id="final-score-text" style="color:#fff; font-weight:bold;">0</span>점</div>
+                    <button class="gameover-btn" onclick="showStartScreen(event)">설정화면으로 이동</button>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="sidebar">
+            <div>
+                <div class="info-panel">
+                    <h3>다음 블록</h3>
+                    <canvas id="nextCanvas" width="96" height="96"></canvas>
+                </div>
+
+                
+
+                <div class="info-panel">
+                    <h3>레벨: <span id="current-level">1</span></h3>
+                    <h3>점수: <span id="current-score">0</span></h3>
+                    <p id="game-status" style="color: #ffeb3b; font-weight: bold;">게임 대기 중</p>
+                </div>
+
+                <div class="info-panel">
+                    <h3>랭킹 (Top 5)</h3>
+                    <ol id="ranking-list"></ol>
+                </div>
+            </div>
+
+            <div>
+                <button id="btn-continue" onclick="this.blur()" disabled>이어서 하기</button>
+                <button id="btn-pause" disabled>일시정지 (저장)</button>
+                <button id="btn-restart" onclick="showStartScreen(event)" style="background-color: #f44336;">설정 / 재시작</button>
+            </div>
+        </div>
+    </div>
+    <script src="tetrisScript.js"></script>
+</body>
+</html>
