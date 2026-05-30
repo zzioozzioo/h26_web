@@ -265,3 +265,16 @@ li { margin-bottom: 5px; color: #ffeb3b; }
 .status-item.active[data-diff="상"] { background-color: #f44336; opacity: 1; }
 .status-item.active[data-obs="일반"] { background-color: #757575; opacity: 1; }
 .status-item.active[data-obs="장애물"] { background-color: #9c27b0; opacity: 1; box-shadow: 0 0 5px #9c27b0; }
+
+@keyframes shake {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(2px, -2px); }
+    60% { transform: translate(-2px, -2px); }
+    80% { transform: translate(2px, 2px); }
+    100% { transform: translate(0, 0); }
+}
+
+.board-wrapper.shake {
+    animation: shake 0.15s ease-in-out;
+}

@@ -38,6 +38,8 @@
         let level = 1;
         const MAX_LEVEL = 10;
         let dropInterval = 1000; 
+        let clearingRows = [];
+        let clearAnimationTimer = 0;
 
         // 게임 설정 옵션 변수
         let currentDifficulty = '중';
@@ -120,7 +122,10 @@
 
             board = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
             score = 0;
-            level = 1;         
+            level = 1;    
+            
+            clearingRows = [];
+            clearAnimationTimer = 0;
             
             if (currentDifficulty === '하') dropInterval = 1200;
             else if (currentDifficulty === '상') dropInterval = 600;
@@ -154,9 +159,20 @@
             const deltaTime = time - lastTime;
             lastTime = time;
 
-            dropCounter += deltaTime;
-            if (dropCounter > dropInterval) {
-                moveDown(); 
+            if (clearAnimationTimer > 0) {
+                clearAnimationTimer--;
+                if (clearAnimationTimer === 0) {
+                    executeLineClear(); // 애니메이션이 끝나면 실제로 줄 삭제
+                    if (currentObstacleMode === '장애물') {
+                        triggerObstacleSystem();
+                    }
+                    createNewPiece(); // 다음 블록 생성
+                }
+            } else {
+                dropCounter += deltaTime;
+                if (dropCounter > dropInterval) {
+                    moveDown(); 
+                }
             }
 
             draw();
@@ -206,11 +222,12 @@
                 lockPiece();
                 clearLines();
                 
-                if (currentObstacleMode === '장애물') {
-                    triggerObstacleSystem();
+                if (clearingRows.length === 0) {
+                    if (currentObstacleMode === '장애물') {
+                        triggerObstacleSystem();
+                    }
+                    createNewPiece();
                 }
-
-                createNewPiece();
             }
         }
 
@@ -278,21 +295,41 @@
 
         function clearLines() {
             let linesCleared = 0;
-            for (let y = ROWS - 1; y >= 0; y--) {
+            clearingRows = []; // 리셋
+
+            // 가득 찬 줄이 있는지 검사하여 번호 기록
+            for (let y = 0; y < ROWS; y++) {
                 if (board[y].every(value => value !== 0)) {
-                    board.splice(y, 1); 
-                    board.unshift(Array(COLS).fill(0)); 
+                    clearingRows.push(y);
                     linesCleared++;
-                    y++; 
                 }
             }
 
+            // 줄이 지워졌다면 이펙트 발동
             if (linesCleared > 0) {
+                clearAnimationTimer = 12; // 애니메이션 지속 프레임 수 (약 0.2초)
+
+                // 점수 및 레벨 계산은 반응성을 위해 즉시 처리
                 const scoreTable = [0, 100, 300, 500, 800];
                 score += scoreTable[linesCleared] || 1000;
                 scoreDisplay.innerText = score;
                 updateLevelAndSpeed();
+
+                // CSS 화면 흔들기 클래스 부여
+                const boardWrapper = document.querySelector(".board-wrapper");
+                boardWrapper.classList.add("shake");
+                setTimeout(() => boardWrapper.classList.remove("shake"), 150);
             }
+        }
+
+        function executeLineClear() {
+            clearingRows.sort((a, b) => a - b); 
+            for (let i = 0; i < clearingRows.length; i++) {
+                let y = clearingRows[i];
+                board.splice(y, 1);
+                board.unshift(Array(COLS).fill(0));
+            }
+            clearingRows = []; // 사용 완료 후 비우기
         }
 
         function updateLevelAndSpeed() {
@@ -383,6 +420,15 @@
                             drawBlock(ctx, currentPiece.x + x, currentPiece.y + y, currentPiece.color);
                         }
                     }
+                }
+            }
+
+            if (clearAnimationTimer > 0 && clearingRows.length > 0) {
+                // 타이머가 줄어들수록 투명도가 낮아지며 자연스럽게 사라짐
+                ctx.fillStyle = `rgba(255, 255, 255, ${clearAnimationTimer / 12})`;
+                for (let i = 0; i < clearingRows.length; i++) {
+                    let y = clearingRows[i];
+                    ctx.fillRect(0, y * BLOCK_SIZE, canvas.width, BLOCK_SIZE);
                 }
             }
 
