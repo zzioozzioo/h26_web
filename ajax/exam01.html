@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let responseScope = document.querySelector('#responseScope')
+            let btn = document.querySelector('button') // btn 여러 개면 id로 구분
+            btn.addEventListener('click', async function() {
+                // 비동기통신
+                // 1. 
+                // let request = new XMLHttpRequest()
+                // request.onreadystatechange = function() {
+
+                // }
+                // request.open('get', 'hello.html')
+                // request.send(null)
+
+                // 2. 위 대신 fetch, then, catch
+                // fetch('hello1.html')
+                // .then(function(response) {
+                //     if(response.status != 200) {
+                //         throw new Error(response.statusText(response.status))
+                //     }
+                //     return response.text()
+                // }) // 메서드 사용하지 않으면 get이 기본값
+                // .then(function(data) {
+                //     console.log(data)
+                //     let responseScope = document.getElementById('responseScope')
+                //     responseScope.value += data + '\n'
+                // })
+                // .catch(function(error) {
+                //     console.log(error)
+                //     let responseScope = document.getElementById('responseScope')
+                //     alert(error)
+                // })
+
+                // 3. 위 대신 async, await, try-catch
+                try {
+                    let response = await fetch('hello1.html') // then 대신 await 사용
+                    console.log(response)
+                    if(response.ok) {
+                        let date = await response.text()
+                        responseScope.value += date + '\n'
+                    } else {
+                        throw new Error(`오류발생: ${response.statusText}(${response.status})`)
+                    }
+                } catch(error) {
+                    responseScope.value += error + '\n'
+                    alert(error)
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+    <button>통신요청</button>
+    <div>
+    <textarea id="responseScope" rows="10" cols="60"></textarea>
+    </div>
+</body>
+</html>
