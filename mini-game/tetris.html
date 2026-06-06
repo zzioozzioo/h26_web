@@ -43,31 +43,47 @@
     <div class="game-container">
         <div>
             <div class="info-panel">
-                    <h3>게임 정보</h3>
-                    <div class="status-container">
-                        <div class="status-row">
-                            <span class="status-label">난이도</span>
-                            <div class="status-options">
-                                <span class="status-item" data-diff="하">하</span>
-                                <span class="status-item" data-diff="중">중</span>
-                                <span class="status-item" data-diff="상">상</span>
-                            </div>
+                <h3>게임 정보</h3>
+                <div class="status-container">
+                    <div class="status-row">
+                        <span class="status-label">난이도</span>
+                        <div class="status-options">
+                            <span class="status-item" data-diff="하">하</span>
+                            <span class="status-item" data-diff="중">중</span>
+                            <span class="status-item" data-diff="상">상</span>
                         </div>
-                        <div class="status-row">
-                            <span class="status-label">모드</span>
-                            <div class="status-options">
-                                <span class="status-item" data-obs="일반">일반</span>
-                                <span class="status-item" data-obs="장애물">장애물</span>
-                            </div>
+                    </div>
+                    <div class="status-row">
+                        <span class="status-label">모드</span>
+                        <div class="status-options">
+                            <span class="status-item" data-obs="일반">일반</span>
+                            <span class="status-item" data-obs="장애물">장애물</span>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="info-panel">
+                <div class="status-container" style="margin-top: 0;">
+                    <div class="status-row">
+                        <span class="status-label" style="color: #fff;">착지 미리보기</span>
+                        <div class="status-options" id="ghost-options">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="ghost-toggle" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="board-wrapper">
                 <canvas id="tetrisCanvas" width="240" height="480"></canvas>
                 
                 <div id="levelup-alert" class="levelup-overlay">
                     LEVEL UP!<br>
                     <span style="font-size: 16px; color: #fff;">Lv.<span id="pop-level">2</span> 진입</span>
+                </div>
+                <div id="combo-alert" class="combo-overlay">
+                    <span id="pop-combo">2</span> COMBO!
                 </div>
 
                 <div id="gameover-screen" class="gameover-overlay">
