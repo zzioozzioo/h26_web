@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #searchResult {
+            border: 1px solid red;
+            padding: 10px;
+            width:65%;
+            height: 700px;
+        }
+    </style>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            let searchBtn = document.querySelector('#searchBtn')
+            searchBtn.addEventListener('click', async function() {
+                let searchDate = document.querySelector('#searchDate').value.replaceAll('-','')
+                console.log(searchDate)
+
+                // 일별 박스오피스 조회
+                let response = await getDailyBoxOffice(searchDate)
+                // console.log(response)
+
+                // 조회된 결과를 화면에 출력
+                showBoxOfficeList(response)
+            })
+        })
+
+        let getDailyBoxOffice = async function(searchDate) {
+
+                let params = new URLSearchParams({
+                    key: 'ed167a2e9cb4a9a85949d0b03a67d94a',
+                    targetDt: searchDate
+                })
+                let url = `http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?${params}`
+                let response = await fetch(url)
+    
+                return await response.json()
+        }
+
+        let showBoxOfficeList = function(response) {
+            boxOfficeList = response.boxOfficeResult.dailyBoxOfficeList
+            // console.log(boxOfficeList)
+
+            let searchResult = document.querySelector('#searchResult')
+            searchResult.innerHTML = ''
+            boxOfficeList.forEach(function(movie) {
+                let rank = movie.rank
+                let movieName = movie.movieNm
+                let msg = `<h3>${rank}위 ${movieName}</h3>
+                <button>상세내용보기</button>`
+                searchResult.innerHTML += msg
+            })
+        }
+    </script>
+</head>
+<body>
+    <input type="date" id="searchDate"><button id="searchBtn">조회</button>
+    <div id="searchResult"></div>
+</body>
+</html>

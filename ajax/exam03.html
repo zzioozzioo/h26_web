@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        let load = async function() {
+            let response = await fetch('sample.xml')
+            let text = await response.text()
+            let log = document.querySelector('#log')
+
+            // xml 문서로 변환
+            let xml = new DOMParser().parseFromString(text, 'application/xml')
+            console.log(xml)
+            // log.value = text
+
+            let members = xml.querySelectorAll('member')
+            let msg = ''
+            members.forEach(function(member) {
+                let id = member.querySelector('id').textContent // member.querySelector('id').innerHTML
+                let name = member.querySelector('name').textContent
+                msg += `id : ${id} name : ${name}\n`
+            })
+
+            // log.value = msg
+            log.textContent = msg
+        }
+
+        load()
+    </script>
+</head>
+<body>
+    <textarea rows="10" cols="60" id="log"></textarea>
+    
+</body>
+</html>

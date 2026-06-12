@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let btn = document.querySelector('button')
+            btn.addEventListener('click', async function() {
+
+                let name = document.inputForm.name.value
+                let age = document.inputForm.age.value
+
+                let response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+                    method: 'post',
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded'
+                    },
+                    body: // `name=${name}&age=${age}`
+                        new URLSearchParams({
+                        name: name,
+                        age: age
+                        })
+                })
+
+                if(response.ok) {
+                    let data = await response.text()
+                    data = JSON.parse(data)
+                    console.log(data)
+
+                    let msg = `name: ${data.name} age: ${data.age}\n`
+                    let log = document.querySelector('#log')
+                    log.textContent += msg
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+    <textarea rows="10" cols="60" id="log"></textarea>
+    <form name="inputForm">
+        이름: <input type="text" name="name"><br>
+        나이: <input type="text" name="age"><br>
+    </form>
+    <button>전송</button> 
+    <!-- form 태그 내부에 button: summit으로 인식 -->
+</body>
+</html>
