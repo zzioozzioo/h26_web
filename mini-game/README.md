@@ -3,7 +3,21 @@
  **JavaScript와 HTML5로 구현한 웹 브라우저 테트리스 게임입니다.**  
 
 ---
+## 화면 구성
+**1. 게임 시작 화면**
 
+<img width="383" height="499" alt="스크린샷(231)" src="https://github.com/user-attachments/assets/eefa9e25-5009-48ed-8fea-df3491657d99" />
+
+**2. 플레이 화면**
+
+<img width="383" height="560" alt="스크린샷(232)" src="https://github.com/user-attachments/assets/5266dec8-28c2-44ae-87b8-5a96eb15d8ea" />
+
+**3. 콤보 및 레벨업 화면**
+
+<img width="383" height="560" alt="스크린샷(234)" src="https://github.com/user-attachments/assets/9a7d125b-7157-4a9e-81d1-c83f0acc26f9" />
+
+
+---
 ## 🚀 주요 기능 (Key Features)
 
 * **🎯 맞춤형 게임 모드 (난이도 & 장애물)**
